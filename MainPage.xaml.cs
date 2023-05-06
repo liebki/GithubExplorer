@@ -6,4 +6,14 @@ public partial class MainPage : ContentPage
 	{
 		InitializeComponent();
 	}
+
+	private void BlazorWebViewInitialized(object sender, Microsoft.AspNetCore.Components.WebView.BlazorWebViewInitializedEventArgs e)
+	{
+#if WINDOWS
+		e.WebView.CoreWebView2.Settings.IsZoomControlEnabled = false;
+		e.WebView.CoreWebView2.Settings.IsGeneralAutofillEnabled = false;
+		e.WebView.CoreWebView2.Settings.IsPasswordAutosaveEnabled = false;
+		e.WebView.CoreWebView2.Settings.IsPinchZoomEnabled = false;
+#endif
+	}
 }

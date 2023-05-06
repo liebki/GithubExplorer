@@ -19,7 +19,10 @@ namespace GithubExplorer.Pages
 
 		protected override async Task OnInitializedAsync()
 		{
-			entries = TrendMan.GetAllTrendEntries(Datamanager.ActiveGithubUrl);
+			Tuple<List<TrendEntry>, string> EntriesAndToplanguage = TrendMan.GetAllTrendEntries(Datamanager.ActiveGithubUrl);
+
+			entries = EntriesAndToplanguage.Item1;
+			Datamanager.MostUsedProgramminglanguage = EntriesAndToplanguage.Item2;
 		}
 
 	}

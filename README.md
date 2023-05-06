@@ -1,6 +1,6 @@
 # GithubExplorer
 
-GithubExplorer is a .NET MAUI application that allows you to view the Github Trend page locally on your PC without the need to open a browser. It provides a easy way to explore repositories and, if interested, open them in the browser for further details.
+GithubExplorer is a .NET MAUI application that allows you to view the Github Trend page on your device without the need to open a browser. It provides a easy way to explore repositories and, if interested, open them in the browser for further details.
 
 
 ## Features
@@ -19,7 +19,7 @@ GithubExplorer is a .NET MAUI application that allows you to view the Github Tre
 - View a small important part of the Github Trend page, without opening a browser.
 - Open a repository in the browser for more information using the provided button.
 ###
-- Work in progress: Ability to add custom Trend page links, such as searching for repositories based on programming languages or specific criteria.
+- Work in progress: Save the custom page url somewhere
 - Work in progress: Details-button, to load more details of a certain repository (All languages, contributors, last update etc.)
 
 ## Screenshot(s)

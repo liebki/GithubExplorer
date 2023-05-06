@@ -2,17 +2,29 @@
 
 <div class="page">
 	<main>
-		<MudAppBar Color="Color.Primary" Fixed="false">
+		<MudAppBar Color="Color.Primary" Fixed="true">
 			<MudIconButton OnClick="ReloadPage" Icon="@Icons.Material.Filled.RestartAlt" Color="Color.Inherit" />
 			<MudSpacer />
-			<MudTextField Disabled @bind-Value="NewGithubUrl" Style="color: white" T="string" Placeholder="Custom github.com/trending link" />
-			<MudIconButton Disabled Icon="@Icons.Material.Filled.Search" Color="Color.Inherit" Edge="Edge.Start" />
+			<MudTextField @bind-Value="NewGithubUrl" Style="color: white" T="string" Placeholder="Custom github.com/trending link" />
+			<MudIconButton OnClick="ChangeGithubUrl" Icon="@Icons.Material.Filled.Search" Color="Color.Inherit" Edge="Edge.Start" />
 			<MudSpacer />
-			<MudIconButton Href="https://github.com/liebki/GithubNav" Target="_blank" Icon="@Icons.Custom.Brands.GitHub" Color="Color.Inherit" />
+			<MudIconButton Size="Size.Small" Href="https://github.com/liebki/GithubExplorer" Target="_blank" Icon="@Icons.Custom.Brands.GitHub" Color="Color.Inherit" />
 		</MudAppBar>
 
-		<article class="content px-4">
-			@Body
+		<article style="padding-top: 80px" class="content px-4">
+
+			<MudPaper Elevation="25">
+				<MudToolBar Dense>
+					<MudSpacer />
+					<MudChip Href="@Datamanager.GithubTopicsProgrammingLanguageUrl(Datamanager.MostUsedProgramminglanguage)" Text="@Datamanager.MostUsedProgramminglanguage" Variant="Variant.Text" Color="Color.Primary" />
+					<MudSpacer />
+				</MudToolBar>
+			</MudPaper>
+
+			<div class="mt-5" style="padding-bottom: 20px">
+				@Body
+			</div>
+
 		</article>
 	</main>
 </div>

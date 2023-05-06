@@ -3,19 +3,18 @@ using System.Linq;
 using System.Text;
 using HtmlAgilityPack;
 using GithubExplorer.Models;
+using System.Net;
 
 namespace GithubExplorer.Services
 {
 	public class GithubTrendingManager
 	{
-		public List<TrendEntry> GetAllTrendEntries(string customquery = "https://github.com/trending")
+		public Tuple<List<TrendEntry>, string> GetAllTrendEntries(string customquery = "https://github.com/trending")
 		{
-			List<TrendEntry> entries = new();
-			string QueryUrl = customquery;
-
+			List<TrendEntry> TrendingRepositoriesList = new();
 			HtmlWeb Github = new();
-			HtmlDocument GithubDoc = Github.Load(QueryUrl);
 
+			HtmlDocument GithubDoc = Github.Load(customquery);
 			IEnumerable<HtmlNode> nodes = GithubDoc.QuerySelectorAll("article.Box-row");
 
 			foreach (HtmlNode productElement in nodes)
@@ -32,6 +31,7 @@ namespace GithubExplorer.Services
 					if (Description != null)
 					{
 						DescriptionFiltered = FilterLineBreaks(Description.InnerText);
+						DescriptionFiltered = WebUtility.HtmlDecode(DescriptionFiltered);
 					}
 					string UsernameFiltered = FilterLineBreaks(Username.InnerText.Replace(" /", string.Empty));
 
@@ -48,7 +48,7 @@ namespace GithubExplorer.Services
 					string TotalStarsFiltered = FilterLineBreaks(TotalForksAndStars[0].InnerText);
 					string TotalForksFiltered = FilterLineBreaks(TotalForksAndStars[1].InnerText);
 
-					string ProgrammingLanguage = "No programming language";
+					string ProgrammingLanguage = "None";
 					if (productElement.QuerySelectorAll("article.Box-row > div > span > span") != null)
 					{
 						IList<HtmlNode> ProgrammingLanguageElementCount = productElement.QuerySelectorAll("article.Box-row > div > span > span");
@@ -58,7 +58,7 @@ namespace GithubExplorer.Services
 						}
 					}
 
-					entries.Add(new(UsernameFiltered, RepositoryLinkFiltered, RepositoryName, DescriptionFiltered, TotalStarsFiltered, TotalForksFiltered, ProgrammingLanguage));
+					TrendingRepositoriesList.Add(new(UsernameFiltered, RepositoryLinkFiltered, RepositoryName, DescriptionFiltered, TotalStarsFiltered, TotalForksFiltered, ProgrammingLanguage));
 				}
 				catch (Exception)
 				{
@@ -66,9 +66,24 @@ namespace GithubExplorer.Services
 				}
 			}
 
-			return entries;
+			string TopLanguage = MostOccuringString(TrendingRepositoriesList);
+			return new Tuple<List<TrendEntry>, string>(TrendingRepositoriesList, TopLanguage);
 		}
 
+		private string MostOccuringString(List<TrendEntry> trendEntries)
+		{
+			IEnumerable<IGrouping<string, TrendEntry>> nameGroup = trendEntries.GroupBy(x => x.Programminglanguage);
+			int maxCount = nameGroup.Max(g => g.Count());
+
+			string[] mostCommons = nameGroup.Where(x => x.Count() == maxCount).Select(x => x.Key).ToArray();
+			return mostCommons[0];
+		}
+
+		/// <summary>
+		/// Simple method to remove linebreaks and useless whitespaces that are typically inside the html-strings.
+		/// </summary>
+		/// <param name="textin">Unfiltered string</param>
+		/// <returns>Filtered string</returns>
 		private string FilterLineBreaks(string textin)
 		{
 			StringBuilder sb = new(textin.Length);

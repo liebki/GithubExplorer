@@ -12,7 +12,6 @@ namespace GithubExplorer.Shared
 		[Inject]
 		public NavManUtils NavMan { get; set; }
 
-
 		[Inject]
 		public DataMan Datamanager { get; set; }
 

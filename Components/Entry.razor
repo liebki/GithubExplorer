@@ -1,0 +1,14 @@
+﻿<MudPaper Elevation="0">
+    <MudChip Size="Size.Small" Href="@Datamanager.GithubTopicsProgrammingLanguageUrl(EntryItem.Programminglanguage)" Style="font-weight: bold;" Text="@EntryItem.Programminglanguage" Variant="Variant.Text" Color="Color.Info" />
+    <MudChip Size="Size.Small" Style="font-weight: bold;" Text="@EntryItem.TotalStars" Icon="@Icons.Material.Filled.Star" Variant="Variant.Text" Color="Color.Secondary" />
+    <MudChip Size="Size.Small" Style="font-weight: bold;" Text="@EntryItem.TotalForks" Icon="@Icons.Material.Filled.ForkRight" Variant="Variant.Text" Color="Color.Secondary" />
+
+    <MudPaper Class="mt-3" Elevation="0">
+        <MudText>@EntryItem.Description</MudText>
+
+        <MudPaper Class="mt-2" Elevation="0">
+            <MudButton Variant="Variant.Text" Href="@EntryItem.RespositoryLink" Target="_blank" EndIcon="@Icons.Material.Filled.Link" Color="Color.Primary">Visit Repository</MudButton>
+        </MudPaper>
+
+    </MudPaper>
+</MudPaper>
