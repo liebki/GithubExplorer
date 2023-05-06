@@ -8,11 +8,11 @@ GithubExplorer is a .NET MAUI application that allows you to view the Github Tre
 - Built with dotnet 7.0 and dotnet MAUI.
 - Utilizes the following NuGet packages:
   - HtmlAgilityPack
-  - HtmlAgilityPack.CssSelector (Custom package for Android MAUI compatibility)
+  - [HtmlAgilityPack.CssSelector (Custom package for Android MAUI compatibility)](https://www.nuget.org/packages/CssSelectors.Core.HtmlAgilityPack)
   - MudBlazor
   - NavigationManagerUtils
   - Microsoft's MAUI-related packages
-
+  
 
 ## Functionality
 

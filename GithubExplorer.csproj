@@ -28,6 +28,11 @@
         <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
         <TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
         <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
+        <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
+        <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
+        <AppxSymbolPackageEnabled>False</AppxSymbolPackageEnabled>
+        <GenerateTestArtifacts>True</GenerateTestArtifacts>
+        <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
     </PropertyGroup>
 
     <ItemGroup>
@@ -49,9 +54,9 @@
     </ItemGroup>
 
     <ItemGroup>
+        <PackageReference Include="CssSelectors.Core.HtmlAgilityPack" Version="1.0.4" />
         <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
 		<PackageReference Include="HtmlAgilityPack" Version="1.11.46" />
-		<PackageReference Include="HtmlAgilityPack.CssSelectors" Version="1.0.3" />
 		<PackageReference Include="MudBlazor" Version="6.2.3" />
 		<PackageReference Include="NavigationManagerUtils" Version="0.0.1" />
     </ItemGroup>

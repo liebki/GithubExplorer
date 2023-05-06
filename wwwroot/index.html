@@ -15,7 +15,15 @@
 
     <div class="status-bar-safe-area"></div>
 
-    <div id="app">Loading...</div>
+    <div id="app">
+        <div style="position: absolute; top: 30vh; width: 100%; text-align: center;">
+            <h1 style="font-weight: bold;">GithubExplorer</h1>
+            <div style="display: flex; flex-direction: column; align-items: center;">
+                <p>Please wait, while we load the trending repositories...</p>
+                <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;"></div>
+            </div>
+        </div>
+    </div>
 
     <div id="blazor-error-ui">
         An unhandled error has occurred.
@@ -24,7 +32,7 @@
     </div>
 
     <script src="_framework/blazor.webview.js" autostart="false"></script>
-	<script src="_content/MudBlazor/MudBlazor.min.js"></script>
+    <script src="_content/MudBlazor/MudBlazor.min.js"></script>
 
 </body>
 
