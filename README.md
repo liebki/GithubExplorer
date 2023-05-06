@@ -2,6 +2,7 @@
 
 GithubExplorer is a .NET MAUI application that allows you to view the Github Trend page locally on your PC without the need to open a browser. It provides a easy way to explore repositories and, if interested, open them in the browser for further details.
 
+
 ## Features
 
 - Built with dotnet 7.0 and dotnet MAUI.
@@ -12,12 +13,19 @@ GithubExplorer is a .NET MAUI application that allows you to view the Github Tre
   - NavigationManagerUtils
   - Microsoft's MAUI-related packages
 
+
 ## Functionality
 
 - View a small important part of the Github Trend page, without opening a browser.
 - Open a repository in the browser for more information using the provided button.
+###
 - Work in progress: Ability to add custom Trend page links, such as searching for repositories based on programming languages or specific criteria.
 - Work in progress: Details-button, to load more details of a certain repository (All languages, contributors, last update etc.)
+
+## Screenshot(s)
+
+![Application Screenshot](https://raw.githubusercontent.com/liebki/GithubExplorer/master/Screenshots/Application-Screenshot.PNG)
+
 
 ## Contributing
 
@@ -27,6 +35,7 @@ Contributions are welcome! If you would like to contribute to GithubExplorer, pl
 2. Create a new branch for your feature or bug fix.
 3. Make your changes and test thoroughly.
 4. Submit a pull request, clearly describing the changes you have made.
+
 
 ## License
 
@@ -44,13 +53,15 @@ For purposes of the foregoing, “Sell” means practicing any or all of the rig
 
 [GNU](https://choosealicense.com/licenses/gpl-3.0/)
 
+
 ## Acknowledgments
 
-GithubExplorer utilizes open-source libraries and frameworks. We would like to acknowledge and thank the following projects:
+GithubExplorer utilizes open-source libraries and frameworks:
 
 - [HtmlAgilityPack](https://html-agility-pack.net/)
 - [MudBlazor](https://mudblazor.com/)
 - [NavigationManagerUtils](https://www.nuget.org/packages/NavigationManagerUtils)
 - Microsoft MAUI and associated packages
+
 
 #### Enjoy exploring the Github Trend page with GithubExplorer!

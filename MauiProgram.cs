@@ -1,7 +1,7 @@
-﻿using GithubExplorer.Services;
-using Microsoft.Extensions.Logging;
-using MudBlazor.Services;
+﻿using MudBlazor.Services;
 using NavigationManagerUtils;
+using GithubExplorer.Services;
+using Microsoft.Extensions.Logging;
 
 namespace GithubExplorer;
 
@@ -9,7 +9,7 @@ public static class MauiProgram
 {
 	public static MauiApp CreateMauiApp()
 	{
-		var builder = MauiApp.CreateBuilder();
+		MauiAppBuilder builder = MauiApp.CreateBuilder();
 		builder
 			.UseMauiApp<App>()
 			.ConfigureFonts(fonts =>
@@ -24,12 +24,12 @@ public static class MauiProgram
 		builder.Logging.AddDebug();
 #endif
 
-        builder.Services.AddSingleton<GithubTrendingManager>();
-        builder.Services.AddTransient<NavManUtils>();
+		builder.Services.AddSingleton<GithubTrendingManager>();
+		builder.Services.AddTransient<NavManUtils>();
 
-        builder.Services.AddSingleton<DataMan>();
-        builder.Services.AddMudServices();
+		builder.Services.AddSingleton<DataMan>();
+		builder.Services.AddMudServices();
 
-        return builder.Build();
+		return builder.Build();
 	}
 }
