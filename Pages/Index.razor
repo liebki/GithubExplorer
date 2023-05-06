@@ -1,0 +1,15 @@
+﻿@page "/"
+
+@if (entries.Count > 0) {
+    <MudExpansionPanels MultiExpansion="true">
+        @foreach (TrendEntry en in entries)
+        {
+            <MudExpansionPanel Text="@en.CreatedByText()">
+                <MudText><b>@en.Programminglanguage</b></MudText>
+                <MudText>@en.Description</MudText>
+                <MudLink Href="@en.RespositoryLink" Target="_blank">Visit Repository</MudLink>
+            </MudExpansionPanel>
+        }
+    </MudExpansionPanels>
+}
+

@@ -1,0 +1,22 @@
+﻿@inherits LayoutComponentBase
+
+<div class="page">
+	<main>
+		<MudAppBar Color="Color.Primary" Fixed="false">
+			<MudIconButton OnClick="ReloadPage" Icon="@Icons.Material.Filled.RestartAlt" Color="Color.Inherit" />
+			<MudSpacer />
+			<MudTextField Disabled @bind-Value="NewGithubUrl" Style="color: white" T="string" Placeholder="Custom github.com/trending link" />
+			<MudIconButton Disabled Icon="@Icons.Material.Filled.Search" Color="Color.Inherit" Edge="Edge.Start" />
+			<MudSpacer />
+			<MudIconButton Href="https://github.com/liebki/GithubNav" Target="_blank" Icon="@Icons.Custom.Brands.GitHub" Color="Color.Inherit" />
+		</MudAppBar>
+
+		<article class="content px-4">
+			@Body
+		</article>
+	</main>
+</div>
+
+	<MudThemeProvider />
+	<MudDialogProvider />
+	<MudSnackbarProvider />
