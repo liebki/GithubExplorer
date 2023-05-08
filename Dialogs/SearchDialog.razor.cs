@@ -1,8 +1,8 @@
 ﻿using System;
 using MudBlazor;
 using System.Linq;
-using Microsoft.AspNetCore.Components;
 using GithubExplorer.Services;
+using Microsoft.AspNetCore.Components;
 
 namespace GithubExplorer.Dialogs
 {
@@ -45,7 +45,7 @@ namespace GithubExplorer.Dialogs
 
 		private void BuildGithubUrl()
 		{
-			if(string.IsNullOrEmpty(NewGithubUrl) || string.IsNullOrWhiteSpace(NewGithubUrl) || !NewGithubUrl.Contains("github.com/trending", StringComparison.InvariantCultureIgnoreCase))
+			if (string.IsNullOrEmpty(NewGithubUrl) || string.IsNullOrWhiteSpace(NewGithubUrl) || !NewGithubUrl.Contains("github.com/trending", StringComparison.InvariantCultureIgnoreCase))
 			{
 				NewGithubUrl = "https://github.com/trending";
 			}

@@ -10,21 +10,21 @@ GithubExplorer is a .NET MAUI application that allows you to view the Github Tre
   - HtmlAgilityPack
   - [HtmlAgilityPack.CssSelector (Custom package for Android MAUI compatibility)](https://www.nuget.org/packages/CssSelectors.Core.HtmlAgilityPack)
   - MudBlazor
+  - Newtonsoft.Json
   - NavigationManagerUtils
   - Microsoft's MAUI-related packages
   
 
 ## Functionality
 
-- View a small important part of the Github Trend page, without opening a browser.
-- Open a repository in the browser for more information using the provided button.
+- Check out the Github-Trends, without opening the browser.
+- If needed, open a repository in the browser for more information (or use the feature, which is WIP down below)
 ###
-- Work in progress: Save the custom page url somewhere
-- Work in progress: Details-button, to load more details of a certain repository (All languages, contributors, last update etc.)
+- WIP: Details-button, to load more details of a certain repository (All languages, contributors, last update etc.)
 
 ## Screenshot(s)
 
-![Application Screenshot](https://raw.githubusercontent.com/liebki/GithubExplorer/master/Screenshots/Application-Screenshot.PNG)
+![Application Screenshot (GIF)](https://raw.githubusercontent.com/liebki/GithubExplorer/master/Screenshots/Application-Screenshot-1.2.0.gif)
 
 
 ## Contributing
@@ -61,6 +61,7 @@ GithubExplorer utilizes open-source libraries and frameworks:
 - [HtmlAgilityPack](https://html-agility-pack.net/)
 - [MudBlazor](https://mudblazor.com/)
 - [NavigationManagerUtils](https://www.nuget.org/packages/NavigationManagerUtils)
+- [Newtonsoft.Json](https://www.nuget.org/packages/Newtonsoft.Json/)
 - Microsoft MAUI and associated packages
 
 

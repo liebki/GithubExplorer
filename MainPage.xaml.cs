@@ -1,4 +1,6 @@
-﻿namespace GithubExplorer;
+﻿using Microsoft.AspNetCore.Components.WebView;
+
+namespace GithubExplorer;
 
 public partial class MainPage : ContentPage
 {
@@ -7,7 +9,7 @@ public partial class MainPage : ContentPage
 		InitializeComponent();
 	}
 
-	private void BlazorWebViewInitialized(object sender, Microsoft.AspNetCore.Components.WebView.BlazorWebViewInitializedEventArgs e)
+	private void BlazorWebViewInitialized(object sender, BlazorWebViewInitializedEventArgs e)
 	{
 #if WINDOWS
 		e.WebView.CoreWebView2.Settings.IsZoomControlEnabled = false;

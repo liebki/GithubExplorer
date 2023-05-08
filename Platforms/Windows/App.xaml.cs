@@ -1,4 +1,5 @@
-﻿namespace GithubExplorer.WinUI;
+﻿
+namespace GithubExplorer.WinUI;
 
 /// <summary>
 /// Provides application-specific behavior to supplement the default Application class.
