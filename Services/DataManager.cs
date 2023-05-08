@@ -1,14 +1,20 @@
 ﻿using System;
 using System.Linq;
+using GithubExplorer.Models;
 
 namespace GithubExplorer.Services
 {
-	public class DataMan
+	public class DataManager
 	{
-		public string ActiveGithubUrl { get; set; } = "https://github.com/trending";
+		public GithubExplorerSettings ActiveSettings { get; set; } = new("https://github.com/trending", "daily", false);
 
 		public string MostUsedProgramminglanguage { get; set; }
 
+		/// <summary>
+		/// Parse characters like # and + to still be able to use them in the url, more to come if needed
+		/// </summary>
+		/// <param name="textin"></param>
+		/// <returns></returns>
 		public string GithubTopicsProgrammingLanguageUrl(string textin)
 		{
 			if (textin != "None" && !string.IsNullOrEmpty(textin))
@@ -32,3 +38,4 @@ namespace GithubExplorer.Services
 
 	}
 }
+

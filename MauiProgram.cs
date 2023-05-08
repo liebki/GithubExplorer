@@ -7,8 +7,10 @@ namespace GithubExplorer;
 
 public static class MauiProgram
 {
+
 	public static MauiApp CreateMauiApp()
 	{
+
 		MauiAppBuilder builder = MauiApp.CreateBuilder();
 		builder
 			.UseMauiApp<App>()
@@ -27,9 +29,10 @@ public static class MauiProgram
 		builder.Services.AddSingleton<GithubTrendingManager>();
 		builder.Services.AddTransient<NavManUtils>();
 
-		builder.Services.AddSingleton<DataMan>();
-		builder.Services.AddMudServices();
+		builder.Services.AddSingleton<DataManager>();
+		builder.Services.AddSingleton<ConfigManager>();
 
+		builder.Services.AddMudServices();
 		return builder.Build();
 	}
 }

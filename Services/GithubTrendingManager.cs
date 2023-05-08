@@ -1,9 +1,9 @@
 ﻿using System;
+using System.Net;
 using System.Linq;
 using System.Text;
 using HtmlAgilityPack;
 using GithubExplorer.Models;
-using System.Net;
 
 namespace GithubExplorer.Services
 {

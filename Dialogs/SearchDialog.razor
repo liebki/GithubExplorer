@@ -1,0 +1,16 @@
+﻿<MudDialog>
+    <DialogContent>
+        <MudMenu Label="Trend type selection" Variant="Variant.Text" Color="Color.Primary" FullWidth="true">
+            <MudMenuItem OnClick="() => SetTrendType(0)">Daily</MudMenuItem>
+            <MudMenuItem OnClick="() => SetTrendType(1)">Weekly</MudMenuItem>
+            <MudMenuItem OnClick="() => SetTrendType(2)">Monthly</MudMenuItem>
+        </MudMenu>            
+        
+        <MudTextField @bind-Value="NewGithubUrl" T="string" Placeholder="Own https://github.com/trending url" />
+    </DialogContent>
+
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="Color.Primary" OnClick="Submit">Search!</MudButton>
+    </DialogActions>
+</MudDialog>

@@ -12,7 +12,7 @@ namespace GithubExplorer.Components
 		public TrendEntry EntryItem { get; set; }
 
 		[Inject]
-		public DataMan Datamanager { get; set; }
+		public DataManager Datamanager { get; set; }
 
 	}
 }

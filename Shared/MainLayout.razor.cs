@@ -1,6 +1,8 @@
 ﻿using System;
+using MudBlazor;
 using System.Linq;
 using NavigationManagerUtils;
+using GithubExplorer.Dialogs;
 using GithubExplorer.Services;
 using Microsoft.AspNetCore.Components;
 
@@ -13,26 +15,50 @@ namespace GithubExplorer.Shared
 		public NavManUtils NavMan { get; set; }
 
 		[Inject]
-		public DataMan Datamanager { get; set; }
+		public DataManager Datamanager { get; set; }
 
-		private string NewGithubUrl { get; set; }
+		[Inject]
+		public ConfigManager ConfigMan { get; set; }
 
-		private void ChangeGithubUrl()
+		[Inject]
+		IDialogService DialogService { get; set; }
+
+		protected override async Task OnInitializedAsync()
 		{
-			if (Uri.IsWellFormedUriString(NewGithubUrl, UriKind.Absolute) && NewGithubUrl.StartsWith("https://github.com/trending") && !NewGithubUrl.StartsWith("https://github.com/trending/developers"))
+			Datamanager.ActiveSettings = ConfigMan.CheckSettings();
+		}
+
+		private async Task OpenSearchDialog()
+		{
+			DialogOptions options = new()
 			{
-				Datamanager.ActiveGithubUrl = NewGithubUrl;
-				ReloadPage();
-			}
-			else
+				CloseOnEscapeKey = true,
+				MaxWidth = MaxWidth.Medium,
+				FullWidth = true
+			};
+
+			IDialogReference dialog = await DialogService.ShowAsync<SearchDialog>("Search", options);
+			DialogResult result = await dialog.Result;
+
+			if (!result.Canceled)
 			{
-				NewGithubUrl = string.Empty;
+				Tuple<string, string> GithubUrlData = (Tuple<string, string>)result.Data;
+				if (Uri.IsWellFormedUriString(GithubUrlData.Item1, UriKind.Absolute) && GithubUrlData.Item1.StartsWith("https://github.com/trending") && !GithubUrlData.Item1.StartsWith("https://github.com/trending/developers"))
+				{
+					Datamanager.ActiveSettings.ActiveGithubUrl = GithubUrlData.Item1;
+				}
+
+				Datamanager.ActiveSettings.ActiveGithubUrlTrendType = GithubUrlData.Item2;
+				ConfigMan.WriteSettings(Datamanager.ActiveSettings);
+
+				NavMan.Reload();
 			}
 		}
 
-		private void ReloadPage()
+		private void ChangeDarkmode()
 		{
-			NavMan.Reload();
+			Datamanager.ActiveSettings.IsDarkmodeEnabled = !Datamanager.ActiveSettings.IsDarkmodeEnabled;
+			ConfigMan.WriteSettings(Datamanager.ActiveSettings);
 		}
 	}
 }

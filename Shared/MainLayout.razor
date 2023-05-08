@@ -2,26 +2,29 @@
 
 <div class="page">
 	<main>
-		<MudAppBar Color="Color.Primary" Fixed="true">
-			<MudIconButton OnClick="ReloadPage" Icon="@Icons.Material.Filled.RestartAlt" Color="Color.Inherit" />
+		<MudAppBar Fixed="true">
+			<MudButton OnClick="() => NavMan.Reload()" StartIcon="@Icons.Material.Filled.RestartAlt" Color="Color.Inherit">Reload</MudButton>
 			<MudSpacer />
-			<MudTextField @bind-Value="NewGithubUrl" Style="color: white" T="string" Placeholder="Custom github.com/trending link" />
-			<MudIconButton OnClick="ChangeGithubUrl" Icon="@Icons.Material.Filled.Search" Color="Color.Inherit" Edge="Edge.Start" />
+
+			<MudButton OnClick="OpenSearchDialog" StartIcon="@Icons.Material.Filled.Search" Color="Color.Inherit">Search</MudButton>
 			<MudSpacer />
-			<MudIconButton Size="Size.Small" Href="https://github.com/liebki/GithubExplorer" Target="_blank" Icon="@Icons.Custom.Brands.GitHub" Color="Color.Inherit" />
+
+			<MudSwitch T="bool" CheckedChanged="ChangeDarkmode" Color="Color.Primary" />
+			<MudButton Size="Size.Small" Href="https://github.com/liebki/GithubExplorer" Target="_blank" StartIcon="@Icons.Custom.Brands.GitHub" Color="Color.Inherit">GitHub</MudButton>
 		</MudAppBar>
 
-		<article style="padding-top: 80px" class="content px-4">
+		<article style="padding-top: 75px" class="content px-4">
 
-			<MudPaper Elevation="25">
-				<MudToolBar Dense>
-					<MudSpacer />
-					<MudChip Href="@Datamanager.GithubTopicsProgrammingLanguageUrl(Datamanager.MostUsedProgramminglanguage)" Text="@Datamanager.MostUsedProgramminglanguage" Variant="Variant.Text" Color="Color.Primary" />
-					<MudSpacer />
-				</MudToolBar>
-			</MudPaper>
+			<MudToolBar Dense>
+				<MudSpacer />
+				<MudText>
+					Top @Datamanager.ActiveSettings.ActiveGithubUrlTrendType language:
+					<MudChip Href="@Datamanager.GithubTopicsProgrammingLanguageUrl(Datamanager.MostUsedProgramminglanguage)" Text="@Datamanager.MostUsedProgramminglanguage" Variant="Variant.Text" Color="Color.Inherit" />
+					</MudText>
+				<MudSpacer />
+			</MudToolBar>
 
-			<div class="mt-5" style="padding-bottom: 20px">
+			<div style="padding-bottom: 20px">
 				@Body
 			</div>
 
@@ -29,6 +32,6 @@
 	</main>
 </div>
 
-	<MudThemeProvider />
-	<MudDialogProvider />
-	<MudSnackbarProvider />
+<MudThemeProvider @bind-IsDarkMode="Datamanager.ActiveSettings.IsDarkmodeEnabled" />
+<MudDialogProvider />
+<MudSnackbarProvider />

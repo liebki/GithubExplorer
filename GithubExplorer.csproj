@@ -59,6 +59,7 @@
 		<PackageReference Include="HtmlAgilityPack" Version="1.11.46" />
 		<PackageReference Include="MudBlazor" Version="6.2.3" />
 		<PackageReference Include="NavigationManagerUtils" Version="0.0.1" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     </ItemGroup>
 
     <ItemGroup>
