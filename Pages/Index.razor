@@ -1,13 +1,20 @@
 ﻿@page "/"
 
-@if (entries.Count > 0) {
+@if (Datamanager.LoadedEntries.Count > 0)
+{
     <MudExpansionPanels MultiExpansion="true">
-        @foreach (TrendEntry en in entries)
+        @foreach (TrendEntry en in Datamanager.LoadedEntries)
         {
-            <MudExpansionPanel Text="@en.CreatedByText()">
-                <Entry EntryItem="en" />
+            <MudExpansionPanel Text="@en.ParseCreatedByText()">
+                <RepositoryView EntryItem="en" />
             </MudExpansionPanel>
         }
     </MudExpansionPanels>
-}
 
+} else {
+    <MudContainer style="position: absolute; top: 30vh; width: 100%; text-align: center;">
+        <MudContainer style="display: flex; flex-direction: column; align-items: center;">
+            <MudText>Loading...</MudText>
+        </MudContainer>
+    </MudContainer>
+}

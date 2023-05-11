@@ -10,6 +10,7 @@ GithubExplorer is a .NET MAUI application that allows you to view the Github Tre
   - HtmlAgilityPack
   - [HtmlAgilityPack.CssSelector (Custom package for Android MAUI compatibility)](https://www.nuget.org/packages/CssSelectors.Core.HtmlAgilityPack)
   - MudBlazor
+  - MudBlazor.Markdown
   - Newtonsoft.Json
   - NavigationManagerUtils
   - Microsoft's MAUI-related packages
@@ -20,11 +21,12 @@ GithubExplorer is a .NET MAUI application that allows you to view the Github Tre
 - Check out the Github-Trends, without opening the browser.
 - If needed, open a repository in the browser for more information (or use the feature, which is WIP down below)
 ###
-- WIP: Details-button, to load more details of a certain repository (All languages, contributors, last update etc.)
+- Details-button, to load more details of a certain repository
+
 
 ## Screenshot(s)
 
-![Application Screenshot (GIF)](https://raw.githubusercontent.com/liebki/GithubExplorer/master/Screenshots/Application-Screenshot-1.2.0.gif)
+![Application Screenshot (GIF)](https://raw.githubusercontent.com/liebki/GithubExplorer/master/Screenshots/Application-Screenshot-1.3.0.gif)
 
 
 ## Contributing
@@ -58,10 +60,11 @@ For purposes of the foregoing, “Sell” means practicing any or all of the rig
 
 GithubExplorer utilizes open-source libraries and frameworks:
 
-- [HtmlAgilityPack](https://html-agility-pack.net/)
-- [MudBlazor](https://mudblazor.com/)
+- [HtmlAgilityPack](https://html-agility-pack.net)
+- [MudBlazor](https://mudblazor.com)
+- [MudBlazor.Markdown](https://www.nuget.org/packages/MudBlazor.Markdown)
 - [NavigationManagerUtils](https://www.nuget.org/packages/NavigationManagerUtils)
-- [Newtonsoft.Json](https://www.nuget.org/packages/Newtonsoft.Json/)
+- [Newtonsoft.Json](https://www.nuget.org/packages/Newtonsoft.Json)
 - Microsoft MAUI and associated packages
 
 

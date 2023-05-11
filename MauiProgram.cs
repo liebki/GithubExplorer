@@ -2,6 +2,7 @@
 using NavigationManagerUtils;
 using GithubExplorer.Services;
 using Microsoft.Extensions.Logging;
+using MudBlazor;
 
 namespace GithubExplorer;
 
@@ -32,7 +33,23 @@ public static class MauiProgram
 		builder.Services.AddSingleton<DataManager>();
 		builder.Services.AddSingleton<ConfigManager>();
 
-		builder.Services.AddMudServices();
-		return builder.Build();
+		builder.Services.AddMudServices(config =>
+        {
+            config.SnackbarConfiguration.PositionClass = Defaults.Classes.Position.BottomRight;
+            config.SnackbarConfiguration.PreventDuplicates = true;
+
+            config.SnackbarConfiguration.NewestOnTop = true;
+            config.SnackbarConfiguration.ShowCloseIcon = true;
+
+            config.SnackbarConfiguration.VisibleStateDuration = 2000;
+            config.SnackbarConfiguration.HideTransitionDuration = 500;
+
+            config.SnackbarConfiguration.ShowTransitionDuration = 500;
+            config.SnackbarConfiguration.SnackbarVariant = Variant.Filled;
+        });
+
+        builder.Services.AddMudMarkdownServices();
+
+        return builder.Build();
 	}
 }

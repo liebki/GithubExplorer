@@ -1,6 +1,4 @@
-﻿using System;
-using System.Net;
-using System.Linq;
+﻿using System.Net;
 using System.Text;
 using HtmlAgilityPack;
 using GithubExplorer.Models;
@@ -9,7 +7,7 @@ namespace GithubExplorer.Services
 {
 	public class GithubTrendingManager
 	{
-		public Tuple<List<TrendEntry>, string> GetAllTrendEntries(string customquery = "https://github.com/trending")
+		public List<TrendEntry> GetAllTrendEntries(string customquery = "https://github.com/trending")
 		{
 			List<TrendEntry> TrendingRepositoriesList = new();
 			HtmlWeb Github = new();
@@ -66,18 +64,87 @@ namespace GithubExplorer.Services
 				}
 			}
 
-			string TopLanguage = MostOccuringString(TrendingRepositoriesList);
-			return new Tuple<List<TrendEntry>, string>(TrendingRepositoriesList, TopLanguage);
+			return TrendingRepositoriesList;
 		}
 
-		private string MostOccuringString(List<TrendEntry> trendEntries)
+		public async Task<TrendEntry> GetTrendDetails(TrendEntry entryinformations)
 		{
-			IEnumerable<IGrouping<string, TrendEntry>> nameGroup = trendEntries.GroupBy(x => x.Programminglanguage);
-			int maxCount = nameGroup.Max(g => g.Count());
+			entryinformations.HasDetails = true;
+			HtmlWeb TrendingRepository = new();
 
-			string[] mostCommons = nameGroup.Where(x => x.Count() == maxCount).Select(x => x.Key).ToArray();
-			return mostCommons[0];
+			HtmlDocument TrendingRep = TrendingRepository.Load(entryinformations.RespositoryLink);
+			HtmlNode ArchiveStatus = TrendingRep.DocumentNode.SelectSingleNode("/html/body/div[1]/div[4]/div/main/div[1]");
+
+			HtmlNode ProjectUrl = TrendingRep.QuerySelector("div.my-3:nth-child(3) > span:nth-child(2) > a:nth-child(1)");
+			IList<HtmlNode> Topics = TrendingRep.QuerySelectorAll("a.topic-tag");
+
+			if (ArchiveStatus?.InnerHtml.Contains("This repository has been archived by the owner on", StringComparison.InvariantCultureIgnoreCase) == true)
+			{
+				entryinformations.IsArchived = true;
+			}
+
+			if (ProjectUrl != null)
+			{
+				entryinformations.HasProjectUrl = true;
+				entryinformations.ProjectUrl = ProjectUrl.Attributes["href"].Value;
+			}
+
+			if (Topics.Count > 0)
+			{
+				List<string> TopicNames = new();
+				foreach (HtmlNode TopicItem in Topics)
+				{
+					TopicNames.Add(FilterLineBreaks(TopicItem.InnerHtml));
+				}
+				entryinformations.Topics = TopicNames.ToArray();
+				entryinformations.HasTopics = true;
+			}
+			else
+			{
+				entryinformations.Topics = Array.Empty<string>();
+			}
+
+			entryinformations.LastCommitTime = $"Last commit: {GetLastCommitTime(entryinformations)}";
+			return entryinformations;
 		}
+
+		private string GetLastCommitTime(TrendEntry entry)
+		{
+			string LastCommitTime = "Error";
+			string CommitTime = FetchLastCommitTime(entry, "master");
+
+			if (string.IsNullOrEmpty(CommitTime))
+			{
+				CommitTime = FetchLastCommitTime(entry, "main");
+				if (!string.IsNullOrEmpty(CommitTime))
+				{
+					entry.LastCommitUrl = entry.GetLastCommitUrl("main");
+					LastCommitTime = CommitTime;
+				}
+			}
+			else
+			{
+				entry.LastCommitUrl = entry.GetLastCommitUrl("master");
+				LastCommitTime = CommitTime;
+			}
+
+			return LastCommitTime;
+		}
+
+		private string FetchLastCommitTime(TrendEntry entry, string branch)
+		{
+			HtmlWeb CommitUrl = new();
+			HtmlDocument TrendingRep = CommitUrl.Load(entry.GetLastCommitUrl(branch));
+
+			HtmlNode LastCommitTimeRaw = TrendingRep.QuerySelector("relative-time.no-wrap");
+
+			if (LastCommitTimeRaw?.InnerHtml.Length > 0)
+			{
+				return FilterLineBreaks(LastCommitTimeRaw.InnerHtml);
+			}
+			return null;
+		}
+
 
 		/// <summary>
 		/// Simple method to remove linebreaks and useless whitespaces that are typically inside the html-strings.
@@ -95,6 +162,30 @@ namespace GithubExplorer.Services
 				}
 			}
 			return sb.ToString().Trim();
+		}
+
+		public string FilterGithubUrlCharacters(string textin)
+		{
+			if (textin != "None" && !string.IsNullOrEmpty(textin))
+			{
+				string LanguageName = NormalizeLanguageNameIdentifier(textin);
+				return $"https://github.com/topics/{LanguageName}";
+			}
+			else
+			{
+				return string.Empty;
+			}
+		}
+
+		private string NormalizeLanguageNameIdentifier(string textin)
+		{
+			string normalized = textin.Replace(" ", "-").ToLowerInvariant();
+			return normalized switch
+			{
+				"c#" => "csharp",
+				"c++" => "cpp",
+				_ => normalized,
+			};
 		}
 	}
 }

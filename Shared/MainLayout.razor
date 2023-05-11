@@ -9,20 +9,11 @@
 			<MudButton OnClick="OpenSearchDialog" StartIcon="@Icons.Material.Filled.Search" Color="Color.Inherit">Search</MudButton>
 			<MudSpacer />
 
-			<MudSwitch T="bool" CheckedChanged="ChangeDarkmode" Color="Color.Primary" />
+			<MudSwitch T="bool" CheckedChanged="ChangeDarkmode" Color="Color.Warning" UnCheckedColor="Color.Warning" />
 			<MudButton Size="Size.Small" Href="https://github.com/liebki/GithubExplorer" Target="_blank" StartIcon="@Icons.Custom.Brands.GitHub" Color="Color.Inherit">GitHub</MudButton>
 		</MudAppBar>
 
-		<article style="padding-top: 75px" class="content px-4">
-
-			<MudToolBar Dense>
-				<MudSpacer />
-				<MudText>
-					Top @Datamanager.ActiveSettings.ActiveGithubUrlTrendType language:
-					<MudChip Href="@Datamanager.GithubTopicsProgrammingLanguageUrl(Datamanager.MostUsedProgramminglanguage)" Text="@Datamanager.MostUsedProgramminglanguage" Variant="Variant.Text" Color="Color.Inherit" />
-					</MudText>
-				<MudSpacer />
-			</MudToolBar>
+		<article style="padding-top: 100px" class="content px-4">
 
 			<div style="padding-bottom: 20px">
 				@Body

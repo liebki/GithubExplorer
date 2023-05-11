@@ -1,0 +1,47 @@
+﻿<MudPaper Elevation="0">
+    <MudChip Size="Size.Small" Href="@TrendMan.FilterGithubUrlCharacters(EntryItem.Programminglanguage)" Style="font-weight: bold;" Text="@EntryItem.Programminglanguage" Variant="Variant.Text" Color="Color.Info" />
+    <MudChip Size="Size.Small" Href="@EntryItem.GetStarsUrl()" Target="_blank" Style="font-weight: bold;" Text="@EntryItem.TotalStars" Icon="@Icons.Material.Filled.Star" Variant="Variant.Text" Color="Color.Secondary" />
+    
+    <MudChip Size="Size.Small" Href="@EntryItem.GetForksUrl()" Target="_blank" Style="font-weight: bold;" Text="@EntryItem.TotalForks" Icon="@Icons.Material.Filled.ForkRight" Variant="Variant.Text" Color="Color.Secondary" />
+    @if(EntryItem.IsArchived)
+    {
+        <MudTooltip Placement="Placement.End" Text="This means, that this repository is read-only for everyone and no longer maintained.">
+            <MudChip Href="https://docs.github.com/en/repositories/archiving-a-github-repository/archiving-repositories" Target="_blank" Size="Size.Small" Style="font-weight: bold;" Text="This repository is archived!" Icon="@Icons.Material.Filled.Archive" Variant="Variant.Text" Color="Color.Error" />
+        </MudTooltip>
+    }
+
+    <MudPaper id="Description" Class="mt-3" Elevation="0">
+        <MudText>@EntryItem.Description</MudText>
+    </MudPaper>
+
+    <MudPaper Class="mt-3" Elevation="0">
+        <MudPaper id="Buttons" Class="mt-2" Elevation="0">
+            <MudButton Size="Size.Small" Variant="Variant.Text" Href="@EntryItem.RespositoryLink" Target="_blank" EndIcon="@Icons.Material.Filled.Link" Color="Color.Primary">Visit Repository</MudButton>
+            <MudButton Disabled=@IsDetailsLoadingButtonLocked Class="mx-3" Size="Size.Small" Variant="Variant.Text" OnClick="FillRepositoryDetails" EndIcon="@Icons.Material.Filled.List" Color="Color.Primary">Load details</MudButton>
+            <MudButton Size="Size.Small" Variant="Variant.Text" OnClick="OpenRepositoryDetailsViewDialog" EndIcon="@Icons.Material.Filled.PictureAsPdf" Color="Color.Primary">Display ReadMe</MudButton>
+        </MudPaper>
+
+        @if(EntryItem.HasDetails)
+        {
+            <MudPaper id="Details" Class="mt-2" Elevation="0">
+                <MudChip Size="Size.Small" Icon="@Icons.Material.Filled.WorkHistory" Color="Color.Info" Href="@EntryItem.LastCommitUrl">@EntryItem.LastCommitTime</MudChip>
+
+                @if(EntryItem.HasProjectUrl)
+                {
+                    <MudChip Size="Size.Small" Icon="@Icons.Material.Filled.Web" Color="Color.Info" Href="@EntryItem.ProjectUrl">@EntryItem.ProjectUrl</MudChip>
+                }
+
+                @if(EntryItem.HasTopics)
+                {
+                    <MudSelect Dense Label="@RepositoryTopicsSelectText()" T="string">
+                        @foreach (string topic in EntryItem.Topics)
+                        {
+                            <MudSelectItem T="string">@topic</MudSelectItem>
+                        }
+                    </MudSelect>
+                }
+            </MudPaper>
+        }
+
+    </MudPaper>
+</MudPaper>
