@@ -1,9 +1,9 @@
 ﻿@page "/"
 
-@if (Datamanager.LoadedEntries.Count > 0)
+@if (Datamanager.LoadedItems.Count > 0)
 {
     <MudExpansionPanels MultiExpansion="true">
-        @foreach (TrendEntry en in Datamanager.LoadedEntries)
+        @foreach (TrendItem en in Datamanager.LoadedItems)
         {
             <MudExpansionPanel Text="@en.ParseCreatedByText()">
                 <RepositoryView EntryItem="en" />

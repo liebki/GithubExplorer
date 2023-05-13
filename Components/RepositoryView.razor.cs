@@ -1,30 +1,27 @@
-﻿using System;
-using MudBlazor;
-using System.Linq;
-using GithubExplorer.Models;
-using GithubExplorer.Dialogs;
+﻿using GithubExplorer.Dialogs;
 using GithubExplorer.Services;
+using GithubNet;
 using Microsoft.AspNetCore.Components;
+using MudBlazor;
 
 namespace GithubExplorer.Components
 {
     partial class RepositoryView
     {
         [Parameter]
-        public TrendEntry EntryItem { get; set; }
+        public TrendItem EntryItem { get; set; }
 
         [Inject]
         public DataManager Datamanager { get; set; }
 
         [Inject]
-        public GithubTrendingManager TrendMan { get; set; }
+        public GithubNetClient TrendMan { get; set; }
 
         [Inject]
         public IDialogService DialogService { get; set; }
 
         [Inject]
         public ISnackbar Snackbar { get; set; }
-
 
         private bool IsDetailsLoadingButtonLocked = false;
 
@@ -46,18 +43,16 @@ namespace GithubExplorer.Components
             Snackbar.Add($"Loading details for {EntryItem.RespositoryName}", Severity.Normal);
             IsDetailsLoadingButtonLocked = true;
 
-            TrendEntry result = await Task.Run(() => TrendMan.GetTrendDetails(EntryItem));
+            TrendItem result = await Task.Run(() => TrendMan.GetTrendItemDetailsAsync(EntryItem));
             EntryItem = result;
 
             Snackbar.Add($"Details loaded for {EntryItem.RespositoryName}", Severity.Success);
             IsDetailsLoadingButtonLocked = false;
-
         }
 
         private string RepositoryTopicsSelectText()
         {
             return $"Repository topics: {EntryItem.Topics.Count()}";
         }
-
     }
 }

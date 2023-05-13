@@ -54,9 +54,8 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="CssSelectors.Core.HtmlAgilityPack" Version="1.0.4" />
+        <PackageReference Include="GithubDataNet" Version="0.1.0" />
         <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
-		<PackageReference Include="HtmlAgilityPack" Version="1.11.46" />
 		<PackageReference Include="MudBlazor" Version="6.2.3" />
 		<PackageReference Include="MudBlazor.Markdown" Version="0.1.0" />
 		<PackageReference Include="NavigationManagerUtils" Version="0.0.1" />
