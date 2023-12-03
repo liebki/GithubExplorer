@@ -1,21 +1,23 @@
 ﻿using Microsoft.AspNetCore.Components.WebView;
 
-namespace GithubExplorer;
-
-public partial class MainPage : ContentPage
+namespace GithubExplorer
 {
-    public MainPage()
+    public partial class MainPage : ContentPage
     {
-        InitializeComponent();
-    }
+        public MainPage()
+        {
+            InitializeComponent();
+        }
 
-    private void BlazorWebViewInitialized(object sender, BlazorWebViewInitializedEventArgs e)
-    {
+
+        private void BlazorWebViewInitialized(object sender, BlazorWebViewInitializedEventArgs e)
+        {
 #if WINDOWS
-        e.WebView.CoreWebView2.Settings.IsZoomControlEnabled = false;
-        e.WebView.CoreWebView2.Settings.IsGeneralAutofillEnabled = false;
-        e.WebView.CoreWebView2.Settings.IsPasswordAutosaveEnabled = false;
-        e.WebView.CoreWebView2.Settings.IsPinchZoomEnabled = false;
+            e.WebView.CoreWebView2.Settings.IsZoomControlEnabled = false;
+            e.WebView.CoreWebView2.Settings.IsGeneralAutofillEnabled = false;
+            e.WebView.CoreWebView2.Settings.IsPasswordAutosaveEnabled = false;
+            e.WebView.CoreWebView2.Settings.IsPinchZoomEnabled = false;
 #endif
+        }
     }
 }

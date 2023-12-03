@@ -1,3 +1,19 @@
 ﻿<MudContainer>
-    <MudMarkdown Value="@ReadMeMarkdownString" />
+
+    @if (ReadmeIsLoaded)
+    {
+        @if (EntryItem != null && !string.IsNullOrEmpty(ReadMeMarkdownString))
+        {
+            <MudMarkdown Value="@ReadMeMarkdownString" />
+        }
+        else
+        {
+            <MudText Color="Color.Error">An error occured!</MudText>
+        }
+    } else
+    {
+        <MudText Color="Color.Primary">Readme is loading, please wait...</MudText>
+    }
+
+
 </MudContainer>

@@ -5,8 +5,9 @@ namespace GithubExplorer.Services
 {
     public class DataManager
     {
-        public GithubExplorerSettings ActiveSettings { get; set; } = new("https://github.com/trending", "daily", false);
+        public GithubExplorerSettings ActiveSettings { get; set; } = new(StaticServingClass.GithubTrendingBaseUrl, "daily", false);
 
-        public List<TrendItem> LoadedItems { get; set; } = new();
+        public IEnumerable<TrendRepository> LoadedItems { get; set; } = new List<TrendRepository>();
+
     }
 }

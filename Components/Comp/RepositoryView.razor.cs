@@ -4,12 +4,12 @@ using GithubNet;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
 
-namespace GithubExplorer.Components
+namespace GithubExplorer.Components.Comp
 {
     partial class RepositoryView
     {
         [Parameter]
-        public TrendItem EntryItem { get; set; }
+        public TrendRepository EntryItemLoad { get; set; }
 
         [Inject]
         public DataManager Datamanager { get; set; }
@@ -23,6 +23,8 @@ namespace GithubExplorer.Components
         [Inject]
         public ISnackbar Snackbar { get; set; }
 
+        public FullRepository FullRep { get; set; } = null;
+
         private bool IsDetailsLoadingButtonLocked = false;
 
         private async Task OpenRepositoryDetailsViewDialog()
@@ -34,25 +36,30 @@ namespace GithubExplorer.Components
                 FullWidth = true
             };
 
-            DialogParameters parameters = new() { ["EntryItem"] = EntryItem };
+            DialogParameters parameters = new() { ["EntryItem"] = EntryItemLoad };
             await DialogService.ShowAsync<RepositoryDetailsViewDialog>(string.Empty, parameters, options);
         }
 
         private async Task FillRepositoryDetails()
         {
-            Snackbar.Add($"Loading details for {EntryItem.RespositoryName}", Severity.Normal);
+            Snackbar.Add($"Loading details for {EntryItemLoad.RepositoryName}", Severity.Normal);
             IsDetailsLoadingButtonLocked = true;
 
-            TrendItem result = await Task.Run(() => TrendMan.GetTrendItemDetailsAsync(EntryItem));
-            EntryItem = result;
+            FullRepository result = await Task.Run(() => TrendMan.GetFullRepository(EntryItemLoad.Url));
+            FullRep = result;
 
-            Snackbar.Add($"Details loaded for {EntryItem.RespositoryName}", Severity.Success);
+            Snackbar.Add($"Details loaded for {EntryItemLoad.RepositoryName}", Severity.Success);
             IsDetailsLoadingButtonLocked = false;
+        }
+
+        private string GetLastCommitText()
+        {
+            return $"'{FullRep.LastCommitText}'";
         }
 
         private string RepositoryTopicsSelectText()
         {
-            return $"Repository topics: {EntryItem.Topics.Count()}";
+            return $"Repository topics: {FullRep.Topics.Length}";
         }
     }
 }

@@ -46,7 +46,7 @@ namespace GithubExplorer.Dialogs
         {
             if (string.IsNullOrEmpty(NewGithubUrl) || string.IsNullOrWhiteSpace(NewGithubUrl) || !NewGithubUrl.Contains("github.com/trending", StringComparison.InvariantCultureIgnoreCase))
             {
-                NewGithubUrl = "https://github.com/trending";
+                NewGithubUrl = StaticServingClass.GithubTrendingBaseUrl;
             }
 
             if (NewGithubUrl.Contains("daily", StringComparison.InvariantCultureIgnoreCase))

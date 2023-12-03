@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Components;
 using MudBlazor;
 using NavigationManagerUtils;
 
-namespace GithubExplorer.Shared
+namespace GithubExplorer.Components.Layout
 {
     partial class MainLayout
     {
@@ -40,7 +40,7 @@ namespace GithubExplorer.Shared
             if (!result.Canceled)
             {
                 Tuple<string, string> GithubUrlData = (Tuple<string, string>)result.Data;
-                if (Uri.IsWellFormedUriString(GithubUrlData.Item1, UriKind.Absolute) && GithubUrlData.Item1.StartsWith("https://github.com/trending") && !GithubUrlData.Item1.StartsWith("https://github.com/trending/developers"))
+                if (Uri.IsWellFormedUriString(GithubUrlData.Item1, UriKind.Absolute) && GithubUrlData.Item1.StartsWith(StaticServingClass.GithubTrendingBaseUrl) && !GithubUrlData.Item1.StartsWith($"{StaticServingClass.GithubTrendingBaseUrl}/developers"))
                 {
                     Datamanager.ActiveSettings.ActiveGithubUrl = GithubUrlData.Item1;
                 }

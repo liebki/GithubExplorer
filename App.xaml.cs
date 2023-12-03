@@ -1,10 +1,12 @@
-﻿namespace GithubExplorer;
-
-public partial class App : Application
+﻿namespace GithubExplorer
 {
-    public App()
+    public partial class App : Application
     {
-        InitializeComponent();
-        MainPage = new MainPage();
+        public App()
+        {
+            InitializeComponent();
+
+            MainPage = new MainPage();
+        }
     }
 }

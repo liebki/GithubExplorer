@@ -2,9 +2,9 @@
 using GithubNet;
 using Microsoft.AspNetCore.Components;
 
-namespace GithubExplorer.Pages
+namespace GithubExplorer.Components.Pages
 {
-    partial class Index
+    partial class Home
     {
         [Inject]
         public DataManager Datamanager { get; set; }
@@ -14,7 +14,7 @@ namespace GithubExplorer.Pages
 
         protected override async Task OnInitializedAsync()
         {
-            Datamanager.LoadedItems = await Task.Run(() => TrendMan.GetTrendItemsAsync(customQuery: Datamanager.ActiveSettings.ActiveGithubUrl));
+            Datamanager.LoadedItems = await Task.Run(() => TrendMan.GetAllTrendingRepositories(Datamanager.ActiveSettings.ActiveGithubUrl));
         }
     }
 }
