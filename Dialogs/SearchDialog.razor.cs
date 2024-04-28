@@ -2,76 +2,69 @@
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
 
-namespace GithubExplorer.Dialogs
+namespace GithubExplorer.Dialogs;
+
+partial class SearchDialog
 {
-    partial class SearchDialog
+    [CascadingParameter] private MudDialogInstance MudDialog { get; set; }
+
+    [Inject] public DataManager Datamanager { get; set; }
+
+    private string TrendType { get; set; } = "daily";
+
+    private string NewGithubUrl { get; set; } = string.Empty;
+
+    private void Submit()
     {
-        [CascadingParameter]
-        private MudDialogInstance MudDialog { get; set; }
+        MudDialog.Close(DialogResult.Ok(new Tuple<string, string>(NewGithubUrl, TrendType)));
+    }
 
-        [Inject]
-        public DataManager Datamanager { get; set; }
+    private void Cancel()
+    {
+        MudDialog.Cancel();
+    }
 
-        private void Submit() => MudDialog.Close(DialogResult.Ok(new Tuple<string, string>(NewGithubUrl, TrendType)));
+    protected override async Task OnInitializedAsync()
+    {
+        NewGithubUrl = Datamanager.ActiveSettings.ActiveGithubUrl;
+    }
 
-        private void Cancel() => MudDialog.Cancel();
-
-        private string TrendType { get; set; } = "daily";
-
-        private string NewGithubUrl { get; set; } = string.Empty;
-
-        protected override async Task OnInitializedAsync()
+    private void SetTrendType(int trendtype)
+    {
+        TrendType = trendtype switch
         {
-            NewGithubUrl = Datamanager.ActiveSettings.ActiveGithubUrl;
+            0 => "daily",
+            1 => "weekly",
+            _ => "monthly"
+        };
+        
+        BuildGithubUrl();
+    }
+
+    private void BuildGithubUrl()
+    {
+        if (string.IsNullOrEmpty(NewGithubUrl) || string.IsNullOrWhiteSpace(NewGithubUrl) ||
+            !NewGithubUrl.Contains("github.com/trending", StringComparison.InvariantCultureIgnoreCase))
+            NewGithubUrl = StaticServingClass.GithubTrendingBaseUrl;
+
+        if (NewGithubUrl.Contains("daily", StringComparison.InvariantCultureIgnoreCase))
+        {
+            NewGithubUrl = NewGithubUrl.Replace("daily", TrendType);
         }
-
-        private void SetTrendType(int trendtype)
+        else if (NewGithubUrl.Contains("weekly", StringComparison.InvariantCultureIgnoreCase))
         {
-            if (trendtype == 0)
-            {
-                TrendType = "daily";
-            }
-            else if (trendtype == 1)
-            {
-                TrendType = "weekly";
-            }
-            else
-            {
-                TrendType = "monthly";
-            }
-            BuildGithubUrl();
+            NewGithubUrl = NewGithubUrl.Replace("weekly", TrendType);
         }
-
-        private void BuildGithubUrl()
+        else if (NewGithubUrl.Contains("monthly", StringComparison.InvariantCultureIgnoreCase))
         {
-            if (string.IsNullOrEmpty(NewGithubUrl) || string.IsNullOrWhiteSpace(NewGithubUrl) || !NewGithubUrl.Contains("github.com/trending", StringComparison.InvariantCultureIgnoreCase))
-            {
-                NewGithubUrl = StaticServingClass.GithubTrendingBaseUrl;
-            }
-
-            if (NewGithubUrl.Contains("daily", StringComparison.InvariantCultureIgnoreCase))
-            {
-                NewGithubUrl = NewGithubUrl.Replace("daily", TrendType);
-            }
-            else if (NewGithubUrl.Contains("weekly", StringComparison.InvariantCultureIgnoreCase))
-            {
-                NewGithubUrl = NewGithubUrl.Replace("weekly", TrendType);
-            }
-            else if (NewGithubUrl.Contains("monthly", StringComparison.InvariantCultureIgnoreCase))
-            {
-                NewGithubUrl = NewGithubUrl.Replace("monthly", TrendType);
-            }
+            NewGithubUrl = NewGithubUrl.Replace("monthly", TrendType);
+        }
+        else
+        {
+            if (NewGithubUrl.Contains('?'))
+                NewGithubUrl += $"&{TrendType}";
             else
-            {
-                if (NewGithubUrl.Contains('?'))
-                {
-                    NewGithubUrl += $"&{TrendType}";
-                }
-                else
-                {
-                    NewGithubUrl += $"?{TrendType}";
-                }
-            }
+                NewGithubUrl += $"?{TrendType}";
         }
     }
 }

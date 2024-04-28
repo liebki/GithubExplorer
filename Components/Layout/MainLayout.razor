@@ -1,28 +1,28 @@
 ﻿@inherits LayoutComponentBase
 
 <div class="page">
-	<main>
-		<MudAppBar Fixed="true">
-			<MudButton OnClick="() => NavMan.Reload()" StartIcon="@Icons.Material.Filled.RestartAlt" Color="Color.Inherit">Reload</MudButton>
-			<MudSpacer />
+    <main>
+        <MudAppBar Fixed="true">
+            <MudButton OnClick="() => NavMan.Reload()" StartIcon="@Icons.Material.Filled.RestartAlt" Color="Color.Inherit">Reload</MudButton>
+            <MudSpacer/>
 
-			<MudButton OnClick="OpenSearchDialog" StartIcon="@Icons.Material.Filled.Search" Color="Color.Inherit">Search</MudButton>
-			<MudSpacer />
+            <MudButton OnClick="OpenSearchDialog" StartIcon="@Icons.Material.Filled.Search" Color="Color.Inherit">Search</MudButton>
+            <MudSpacer/>
 
-			<MudSwitch T="bool" CheckedChanged="ChangeDarkmode" Color="Color.Warning" UnCheckedColor="Color.Warning" />
-			<MudButton Size="Size.Small" Href="https://github.com/liebki/GithubExplorer" Target="_blank" StartIcon="@Icons.Custom.Brands.GitHub" Color="Color.Inherit">GitHub</MudButton>
-		</MudAppBar>
+            <MudSwitch T="bool" CheckedChanged="ChangeDarkmode" Color="Color.Warning" UnCheckedColor="Color.Warning"/>
+            <MudButton Size="Size.Small" Href="https://github.com/liebki/GithubExplorer" Target="_blank" StartIcon="@Icons.Custom.Brands.GitHub" Color="Color.Inherit">GitHub</MudButton>
+        </MudAppBar>
 
-		<article style="padding-top: 100px" class="content px-4">
+        <article style="padding-top: 100px" class="content px-4">
 
-			<div style="padding-bottom: 20px">
-				@Body
-			</div>
+            <div style="padding-bottom: 20px">
+                @Body
+            </div>
 
-		</article>
-	</main>
+        </article>
+    </main>
 </div>
 
-<MudThemeProvider @bind-IsDarkMode="Datamanager.ActiveSettings.IsDarkmodeEnabled" />
-<MudDialogProvider />
-<MudSnackbarProvider />
+<MudThemeProvider @bind-IsDarkMode="Datamanager.ActiveSettings.IsDarkmodeEnabled"/>
+<MudDialogProvider/>
+<MudSnackbarProvider/>

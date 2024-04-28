@@ -1,11 +1,6 @@
-﻿using System;
-using System.Linq;
+﻿namespace GithubExplorer.Services;
 
-namespace GithubExplorer.Services
+public static class StaticServingClass
 {
-    public static class StaticServingClass
-    {
-        public static string GithubTrendingBaseUrl { get; } = "https://github.com/trending";
-
-    }
+    public static string GithubTrendingBaseUrl { get; } = "https://github.com/trending";
 }

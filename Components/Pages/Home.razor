@@ -6,12 +6,13 @@
         @foreach (TrendRepository en in Datamanager.LoadedItems)
         {
             <MudExpansionPanel Text="@en.ParseCreatedByText()">
-                <RepositoryView EntryItemLoad="en" />
+                <RepositoryView EntryItemLoad="en"/>
             </MudExpansionPanel>
         }
     </MudExpansionPanels>
-
-} else {
+}
+else
+{
     <MudContainer style="position: absolute; top: 30vh; width: 100%; text-align: center;">
         <MudContainer style="display: flex; flex-direction: column; align-items: center;">
             <MudText>Loading...</MudText>

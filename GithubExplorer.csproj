@@ -1,9 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
     <PropertyGroup>
-        <!--<TargetFrameworks>net8.0-ios;net8.0-maccatalyst</TargetFrameworks>-->
+        <TargetFramework>net8.0-maccatalyst</TargetFramework>
         <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net8.0-windows10.0.19041.0</TargetFrameworks>
-		<!--<RuntimeIdentifiers>maccatalyst-x64;maccatalyst-arm64</RuntimeIdentifiers>9-->
         <OutputType>Exe</OutputType>
         <RootNamespace>GithubExplorer</RootNamespace>
         <UseMaui>true</UseMaui>
@@ -12,58 +11,61 @@
         <EnableDefaultCssItems>false</EnableDefaultCssItems>
         <Nullable>enable</Nullable>
 
+        <PublishAot>true</PublishAot>
+        
         <!-- Display name -->
-        <ApplicationTitle>GithubExplorer</ApplicationTitle>
+        <ApplicationTitle>GithubTrendExplorer</ApplicationTitle>
 
         <!-- App Identifier -->
-        <ApplicationId>com.companyname.githubexplorer</ApplicationId>
+        <ApplicationId>de.liebki.githubexplorer</ApplicationId>
 
         <!-- Versions -->
-        <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
-        <ApplicationVersion>1</ApplicationVersion>
+        <ApplicationDisplayVersion>1.3.2</ApplicationDisplayVersion>
+        <ApplicationVersion>1.3.2</ApplicationVersion>
+        <AssemblyVersion>1.3.2</AssemblyVersion>
+        <FileVersion>1.3.2</FileVersion>
 
         <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">14.2</SupportedOSPlatformVersion>
         <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">14.0</SupportedOSPlatformVersion>
         <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.19041.0</SupportedOSPlatformVersion>
-		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.19041.0</TargetPlatformMinVersion>
+        <TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.19041.0</TargetPlatformMinVersion>
 
-		<GenerateAppInstallerFile>False</GenerateAppInstallerFile>
-		<AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
-		<AppxSymbolPackageEnabled>False</AppxSymbolPackageEnabled>
-		<GenerateTestArtifacts>True</GenerateTestArtifacts>
-		<HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
+        <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
+        <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
+        <AppxSymbolPackageEnabled>False</AppxSymbolPackageEnabled>
+        <GenerateTestArtifacts>True</GenerateTestArtifacts>
+        <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
 
-	</PropertyGroup>
+    </PropertyGroup>
 
     <ItemGroup>
         <!-- App Icon -->
-        <MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
+        <MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4"/>
 
         <!-- Splash Screen -->
-        <MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128" />
+        <MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128"/>
 
         <!-- Images -->
-        <MauiImage Include="Resources\Images\*" />
-        <MauiImage Update="Resources\Images\dotnet_bot.svg" BaseSize="168,208" />
+        <MauiImage Include="Resources\Images\*"/>
+        <MauiImage Update="Resources\Images\dotnet_bot.svg" BaseSize="168,208"/>
 
         <!-- Custom Fonts -->
-        <MauiFont Include="Resources\Fonts\*" />
+        <MauiFont Include="Resources\Fonts\*"/>
 
         <!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
-        <MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
+        <MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)"/>
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
-        <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
-        <PackageReference Include="Microsoft.AspNetCore.Components.WebView.Maui" Version="$(MauiVersion)" />
-        <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
-
-		<PackageReference Include="GithubDataNet" Version="0.3.2" />
-		<PackageReference Include="MudBlazor" Version="6.11.1" />
-		<PackageReference Include="MudBlazor.Markdown" Version="0.1.2" />
-		<PackageReference Include="NavigationManagerUtils" Version="0.0.1" />
-		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+        <PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)"/>
+        <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)"/>
+        <PackageReference Include="Microsoft.AspNetCore.Components.WebView.Maui" Version="$(MauiVersion)"/>
+        <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0"/>
+        <PackageReference Include="GithubDataNet" Version="0.3.2"/>
+        <PackageReference Include="MudBlazor" Version="6.11.1"/>
+        <PackageReference Include="MudBlazor.Markdown" Version="0.1.2"/>
+        <PackageReference Include="NavigationManagerUtils" Version="0.0.1"/>
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.3"/>
     </ItemGroup>
 
 </Project>

@@ -4,58 +4,53 @@ using Microsoft.AspNetCore.Components;
 using MudBlazor;
 using NavigationManagerUtils;
 
-namespace GithubExplorer.Components.Layout
+namespace GithubExplorer.Components.Layout;
+
+partial class MainLayout
 {
-    partial class MainLayout
+    [Inject] public NavManUtils NavMan { get; set; }
+
+    [Inject] public DataManager Datamanager { get; set; }
+
+    [Inject] public ConfigManager ConfigMan { get; set; }
+
+    [Inject] private IDialogService DialogService { get; set; }
+
+    protected override async Task OnInitializedAsync()
     {
-        [Inject]
-        public NavManUtils NavMan { get; set; }
+        Datamanager.ActiveSettings = ConfigMan.CheckSettings();
+    }
 
-        [Inject]
-        public DataManager Datamanager { get; set; }
-
-        [Inject]
-        public ConfigManager ConfigMan { get; set; }
-
-        [Inject]
-        private IDialogService DialogService { get; set; }
-
-        protected override async Task OnInitializedAsync()
+    private async Task OpenSearchDialog()
+    {
+        DialogOptions options = new()
         {
-            Datamanager.ActiveSettings = ConfigMan.CheckSettings();
-        }
+            CloseOnEscapeKey = true,
+            MaxWidth = MaxWidth.Medium,
+            FullWidth = true
+        };
 
-        private async Task OpenSearchDialog()
+        IDialogReference dialog = await DialogService.ShowAsync<SearchDialog>("Search", options);
+        DialogResult result = await dialog.Result;
+
+        if (!result.Canceled)
         {
-            DialogOptions options = new()
-            {
-                CloseOnEscapeKey = true,
-                MaxWidth = MaxWidth.Medium,
-                FullWidth = true
-            };
+            Tuple<string, string> githubUrlData = (Tuple<string, string>)result.Data;
+            if (Uri.IsWellFormedUriString(githubUrlData.Item1, UriKind.Absolute) &&
+                githubUrlData.Item1.StartsWith(StaticServingClass.GithubTrendingBaseUrl) &&
+                !githubUrlData.Item1.StartsWith($"{StaticServingClass.GithubTrendingBaseUrl}/developers"))
+                Datamanager.ActiveSettings.ActiveGithubUrl = githubUrlData.Item1;
 
-            IDialogReference dialog = await DialogService.ShowAsync<SearchDialog>("Search", options);
-            DialogResult result = await dialog.Result;
+            Datamanager.ActiveSettings.ActiveGithubUrlTrendType = githubUrlData.Item2;
+            ConfigManager.WriteSettings(Datamanager.ActiveSettings);
 
-            if (!result.Canceled)
-            {
-                Tuple<string, string> GithubUrlData = (Tuple<string, string>)result.Data;
-                if (Uri.IsWellFormedUriString(GithubUrlData.Item1, UriKind.Absolute) && GithubUrlData.Item1.StartsWith(StaticServingClass.GithubTrendingBaseUrl) && !GithubUrlData.Item1.StartsWith($"{StaticServingClass.GithubTrendingBaseUrl}/developers"))
-                {
-                    Datamanager.ActiveSettings.ActiveGithubUrl = GithubUrlData.Item1;
-                }
-
-                Datamanager.ActiveSettings.ActiveGithubUrlTrendType = GithubUrlData.Item2;
-                ConfigMan.WriteSettings(Datamanager.ActiveSettings);
-
-                NavMan.Reload();
-            }
+            NavMan.Reload();
         }
+    }
 
-        private void ChangeDarkmode()
-        {
-            Datamanager.ActiveSettings.IsDarkmodeEnabled = !Datamanager.ActiveSettings.IsDarkmodeEnabled;
-            ConfigMan.WriteSettings(Datamanager.ActiveSettings);
-        }
+    private void ChangeDarkmode()
+    {
+        Datamanager.ActiveSettings.IsDarkmodeEnabled = !Datamanager.ActiveSettings.IsDarkmodeEnabled;
+        ConfigManager.WriteSettings(Datamanager.ActiveSettings);
     }
 }

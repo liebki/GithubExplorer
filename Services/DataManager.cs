@@ -1,13 +1,12 @@
 ﻿using GithubExplorer.Models;
 using GithubNet;
 
-namespace GithubExplorer.Services
+namespace GithubExplorer.Services;
+
+public class DataManager
 {
-    public class DataManager
-    {
-        public GithubExplorerSettings ActiveSettings { get; set; } = new(StaticServingClass.GithubTrendingBaseUrl, "daily", false);
+    public GithubExplorerSettings ActiveSettings { get; set; } =
+        new(StaticServingClass.GithubTrendingBaseUrl, "daily", false);
 
-        public IEnumerable<TrendRepository> LoadedItems { get; set; } = new List<TrendRepository>();
-
-    }
+    public IEnumerable<TrendRepository> LoadedItems { get; set; } = new List<TrendRepository>();
 }

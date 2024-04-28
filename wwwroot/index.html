@@ -1,41 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+          name="viewport"/>
     <title>GithubExplorer</title>
-    <base href="/" />
-    <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css" />
-    <link rel="stylesheet" href="css/app.css" />
-    <link rel="stylesheet" href="GithubExplorer.styles.css" />
-    <link href="_content/MudBlazor/MudBlazor.min.css" rel="stylesheet" />
-    <link href="_content/MudBlazor.Markdown/MudBlazor.Markdown.min.css" rel="stylesheet" />
-    <link rel="icon" type="image/png" href="favicon.png" />
+    <base href="/"/>
+    <link href="css/bootstrap/bootstrap.min.css" rel="stylesheet"/>
+    <link href="css/app.css" rel="stylesheet"/>
+    <link href="GithubExplorer.styles.css" rel="stylesheet"/>
+    <link href="_content/MudBlazor/MudBlazor.min.css" rel="stylesheet"/>
+    <link href="_content/MudBlazor.Markdown/MudBlazor.Markdown.min.css" rel="stylesheet"/>
+    <link href="favicon.png" rel="icon" type="image/png"/>
 </head>
 
 <body>
 
-    <div class="status-bar-safe-area"></div>
+<div class="status-bar-safe-area"></div>
 
-    <div id="app">
-        <div style="position: absolute; top: 30vh; width: 100%; text-align: center;">
-            <h1 style="font-weight: bold;">GithubExplorer</h1>
-            <div style="display: flex; flex-direction: column; align-items: center;">
-                <p>Please wait, while we load the trending repositories...</p>
-                <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;"></div>
-            </div>
+<div id="app">
+    <div style="position: absolute; top: 30vh; width: 100%; text-align: center;">
+        <h1 style="font-weight: bold;">GithubExplorer</h1>
+        <div style="display: flex; flex-direction: column; align-items: center;">
+            <p>Please wait, while we load the trending repositories...</p>
+            <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;"></div>
         </div>
     </div>
+</div>
 
-    <div id="blazor-error-ui">
-        An unhandled error has occurred.
-        <a href="" class="reload">Reload</a>
-        <a class="dismiss">🗙</a>
-    </div>
+<div id="blazor-error-ui">
+    An unhandled error has occurred.
+    <a class="reload" href="">Reload</a>
+    <a class="dismiss">🗙</a>
+</div>
 
-    <script src="_framework/blazor.webview.js" autostart="false"></script>
-    <script src="_content/MudBlazor/MudBlazor.min.js"></script>
-    <script src="_content/MudBlazor.Markdown/MudBlazor.Markdown.min.js"></script>
+<script autostart="false" src="_framework/blazor.webview.js"></script>
+<script src="_content/MudBlazor/MudBlazor.min.js"></script>
+<script src="_content/MudBlazor.Markdown/MudBlazor.Markdown.min.js"></script>
 
 </body>
 

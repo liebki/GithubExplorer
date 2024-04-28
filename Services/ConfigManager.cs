@@ -1,81 +1,83 @@
 ﻿using GithubExplorer.Models;
 using Newtonsoft.Json;
+using static System.IO.File;
 
-namespace GithubExplorer.Services
+namespace GithubExplorer.Services;
+
+public class ConfigManager
 {
-    public class ConfigManager
+    private const string SettingsFileName = "GithubExplorerSettings.json";
+
+    /// <summary>
+    ///     Check if the Settings file exists, if not create it with basic values
+    /// </summary>
+    public GithubExplorerSettings CheckSettings()
     {
-        private const string SettingsFileName = "GithubExplorerSettings.json";
+        string settingsFilePath = GetAppSettingsFilePath();
+        if (!Exists(settingsFilePath)) WriteDefaultSettings();
+        return ReadSettings();
+    }
 
-        /// <summary>
-        /// Check if the Settingsfile exists, if not create it with basic values
-        /// </summary>
-        public GithubExplorerSettings CheckSettings()
-        {
-            string SettingsFilePath = GetAppSettingsFolder();
-            if (!File.Exists(SettingsFilePath))
-            {
-                WriteSettings(new("https://github.com/trending", "daily", false));
-            }
-            return ReadSettings();
-        }
+    /// <summary>
+    ///     Save default settings to the settings file
+    /// </summary>
+    private static void WriteDefaultSettings()
+    {
+        GithubExplorerSettings defaultSettings =
+            new GithubExplorerSettings("https://github.com/trending?language=csharp", "monthly", false);
+        WriteSettings(defaultSettings);
+    }
 
-        /// <summary>
-        /// Save the values of the values from this class and put it inside of a .json file to use later
-        /// </summary>
-        public void WriteSettings(GithubExplorerSettings settings)
+    /// <summary>
+    ///     Save the values of the settings object to the JSON file
+    /// </summary>
+    public static void WriteSettings(GithubExplorerSettings settings)
+    {
+        string settingsJson = JsonConvert.SerializeObject(settings, Formatting.Indented);
+        if (!string.IsNullOrEmpty(settingsJson))
         {
-            string SettingsJson = JsonConvert.SerializeObject(settings);
-            if (!string.IsNullOrEmpty(SettingsJson))
-            {
-                File.WriteAllText(GetAppSettingsFolder(), SettingsJson);
-            }
-        }
-
-        /// <summary>
-        /// Read the .json and use the values in this class to make it available in the whole application
-        /// </summary>
-        public GithubExplorerSettings ReadSettings()
-        {
-            string SettingsJson;
+            string settingsFilePath = GetAppSettingsFilePath();
             try
             {
-                SettingsJson = File.ReadAllText(GetAppSettingsFolder());
+                WriteAllText(settingsFilePath, settingsJson);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return null;
+                Console.WriteLine("Error writing settings file: " + ex.Message);
+                throw;
             }
+        }
+    }
 
-            if (!string.IsNullOrEmpty(SettingsJson))
-            {
-                GithubExplorerSettings Settings = JsonConvert.DeserializeObject<GithubExplorerSettings>(SettingsJson);
-                if (SettingsJson != null)
-                {
-                    return Settings;
-                }
-            }
+    /// <summary>
+    ///     Read the settings from the JSON file
+    /// </summary>
+    private GithubExplorerSettings ReadSettings()
+    {
+        string settingsFilePath = GetAppSettingsFilePath();
+        if (!Exists(settingsFilePath)) 
             return null;
+        
+        try
+        {
+            string settingsJson = ReadAllText(settingsFilePath);
+            if (!string.IsNullOrEmpty(settingsJson))
+                return JsonConvert.DeserializeObject<GithubExplorerSettings>(settingsJson);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Error reading settings file: " + ex.Message);
         }
 
-        /// <summary>
-        /// Get the folder where the settings file should be saved, theoretically it's identical from Win2Mac it's the execution directory
-        /// </summary>
-        /// <returns>Directory as string</returns>
-        private string GetAppSettingsFolder()
-        {
-            if (OperatingSystem.IsWindows())
-            {
-                return Path.Combine(AppContext.BaseDirectory, SettingsFileName);
-            }
-            else if (OperatingSystem.IsMacOS() || OperatingSystem.IsMacCatalyst())
-            {
-                return Path.Combine(Path.GetFullPath(Directory.GetParent(Directory.GetCurrentDirectory()).FullName), SettingsFileName);
-            }
-            else
-            {
-                return Path.Combine(FileSystem.Current.AppDataDirectory, SettingsFileName);
-            }
-        }
+        return null;
+    }
+
+    /// <summary>
+    ///     Get the full file path for the settings file
+    /// </summary>
+    private static string GetAppSettingsFilePath()
+    {
+        string documentsFolder = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+        return Path.Combine(documentsFolder, SettingsFileName);
     }
 }
